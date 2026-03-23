@@ -263,6 +263,7 @@ window.runExample = async () => {
         }
 
         const source = editorEl.value;
+        consoleEl.innerHTML = '';
         appendLog('Running...', 'system');
 
         const startRun = performance.now();
