@@ -30,8 +30,8 @@
                     <select id="example-select">
                         <option value="hello">Hello World</option>
                         <option value="counter">Counter Loop</option>
-                        <option value="fetch">HTTP Fetch</option>
-                        <option value="divine">LLM Agent</option>
+                        <option value="strings">String Operations</option>
+                        <option value="fibonacci">Fibonacci</option>
                     </select>
                 </div>
                 <div class="panel-actions">
@@ -41,7 +41,7 @@
                     </button>
                 </div>
             </div>
-            <div id="editor"></div>
+            <textarea id="editor" spellcheck="false" autocomplete="off" autocorrect="off" autocapitalize="off"></textarea>
         </div>
 
         <div class="output-panel">
@@ -52,17 +52,6 @@
                 </div>
             </div>
             <div id="console"></div>
-            <div id="llm-config" class="llm-config hidden">
-                <div class="config-row">
-                    <label>Endpoint</label>
-                    <input id="llm-url" type="text" placeholder="https://your-proxy.example.com/v1" spellcheck="false" />
-                </div>
-                <div class="config-row">
-                    <label>Model</label>
-                    <input id="llm-model" type="text" value="gpt-4o" spellcheck="false" />
-                </div>
-                <p class="config-hint">divine() needs an OpenAI-compatible endpoint with CORS enabled</p>
-            </div>
         </div>
     </main>
 

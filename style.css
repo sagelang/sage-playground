@@ -175,17 +175,12 @@ main {
     white-space: pre;
     color: var(--text-primary);
     tab-size: 4;
+    border: none;
+    outline: none;
+    resize: none;
+    width: 100%;
+    caret-color: var(--accent);
 }
-
-/* Syntax highlighting classes */
-.sy-kw { color: var(--red); font-weight: 500; }
-.sy-str { color: #a5d6ff; }
-.sy-num { color: var(--orange); }
-.sy-comment { color: var(--text-muted); font-style: italic; }
-.sy-fn { color: #d2a8ff; }
-.sy-type { color: var(--cyan); }
-.sy-op { color: var(--text-secondary); }
-.sy-agent { color: var(--green); font-weight: 600; }
 
 /* ---- Output panel ---- */
 .output-panel {
@@ -213,48 +208,6 @@ main {
 .log.error { color: var(--red); }
 .log.success { color: var(--green); }
 
-/* ---- LLM Config ---- */
-.llm-config {
-    background: var(--bg-secondary);
-    border-top: 1px solid var(--border);
-    padding: 10px 16px;
-    flex-shrink: 0;
-}
-
-.llm-config.hidden { display: none; }
-
-.config-row {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    margin-bottom: 6px;
-}
-
-.config-row label {
-    font-size: 0.75rem;
-    color: var(--text-secondary);
-    min-width: 60px;
-    text-align: right;
-}
-
-.config-row input {
-    flex: 1;
-    background: var(--bg-tertiary);
-    border: 1px solid var(--border);
-    color: var(--text-primary);
-    padding: 4px 8px;
-    font-family: var(--font-mono);
-    font-size: 0.78rem;
-    border-radius: 4px;
-    outline: none;
-}
-.config-row input:focus { border-color: var(--accent); }
-
-.config-hint {
-    font-size: 0.7rem;
-    color: var(--text-muted);
-    margin-top: 2px;
-}
 
 /* ---- Footer ---- */
 footer {
