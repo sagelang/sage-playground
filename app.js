@@ -129,15 +129,100 @@ window.clearConsole = () => { consoleEl.innerHTML = ''; };
 
 // ---- Editor ----
 const editorEl = document.getElementById('editor');
+const highlightEl = document.getElementById('highlight').firstElementChild;
 const selectEl = document.getElementById('example-select');
+
+// ---- Syntax highlighting ----
+const SAGE_KEYWORDS = new Set([
+    'agent', 'on', 'start', 'fn', 'let', 'while', 'if', 'else', 'for', 'in',
+    'loop', 'break', 'return', 'yield', 'run', 'match', 'try', 'catch', 'fail',
+    'divine', 'infer', 'spawn', 'use', 'mod', 'pub', 'enum', 'record', 'protocol',
+    'supervisor', 'tool', 'summon', 'emit', 'subscribe', 'checkpoint',
+]);
+
+const SAGE_TYPES = new Set([
+    'Int', 'Float', 'Bool', 'String', 'List', 'Map', 'Result', 'Option',
+]);
+
+const SAGE_BUILTINS = new Set([
+    'print', 'trace', 'int_to_str', 'float_to_str', 'str_to_int', 'str_to_float',
+    'len', 'contains', 'split', 'trim', 'to_upper', 'to_lower', 'push', 'get',
+    'slice', 'join', 'abs', 'min', 'max', 'range', 'chr', 'type_of',
+]);
+
+function highlightSage(source) {
+    // Tokenise with a single regex — order matters (comments and strings first)
+    const TOKEN_RE = /(\/\/[^\n]*)|("(?:[^"\\]|\\.)*")|(\b\d+(?:\.\d+)?\b)|(\b[a-zA-Z_]\w*\b)|(\+\+|->|[{}();,=<>!+\-*/%.|&:@])/g;
+
+    let result = '';
+    let last = 0;
+    let m;
+
+    while ((m = TOKEN_RE.exec(source)) !== null) {
+        // Append any unmatched text between tokens
+        if (m.index > last) {
+            result += esc(source.slice(last, m.index));
+        }
+        last = m.index + m[0].length;
+
+        const [tok, comment, str, num, ident, op] = m;
+
+        if (comment) {
+            result += `<span class="hl-comment">${esc(comment)}</span>`;
+        } else if (str) {
+            result += `<span class="hl-str">${esc(str)}</span>`;
+        } else if (num) {
+            result += `<span class="hl-num">${esc(num)}</span>`;
+        } else if (ident) {
+            if (ident === 'true' || ident === 'false') {
+                result += `<span class="hl-bool">${ident}</span>`;
+            } else if (SAGE_KEYWORDS.has(ident)) {
+                result += `<span class="hl-kw">${ident}</span>`;
+            } else if (SAGE_TYPES.has(ident)) {
+                result += `<span class="hl-type">${ident}</span>`;
+            } else if (SAGE_BUILTINS.has(ident)) {
+                result += `<span class="hl-builtin">${ident}</span>`;
+            } else {
+                result += esc(ident);
+            }
+        } else if (op) {
+            result += `<span class="hl-op">${esc(op)}</span>`;
+        } else {
+            result += esc(tok);
+        }
+    }
+
+    // Append any remaining text
+    if (last < source.length) {
+        result += esc(source.slice(last));
+    }
+
+    // Trailing newline so the pre height matches the textarea
+    return result + '\n';
+}
+
+function syncHighlight() {
+    highlightEl.innerHTML = highlightSage(editorEl.value);
+}
+
+function syncScroll() {
+    const pre = highlightEl.parentElement;
+    pre.scrollTop = editorEl.scrollTop;
+    pre.scrollLeft = editorEl.scrollLeft;
+}
 
 function loadExample(name) {
     const ex = EXAMPLES[name];
     if (!ex) return;
     editorEl.value = ex.source;
+    syncHighlight();
 }
 
 selectEl.addEventListener('change', () => loadExample(selectEl.value));
+
+// Sync highlight on every input
+editorEl.addEventListener('input', syncHighlight);
+editorEl.addEventListener('scroll', syncScroll);
 
 // Handle Tab key in editor
 editorEl.addEventListener('keydown', (e) => {
@@ -147,6 +232,7 @@ editorEl.addEventListener('keydown', (e) => {
         const end = editorEl.selectionEnd;
         editorEl.value = editorEl.value.substring(0, start) + '    ' + editorEl.value.substring(end);
         editorEl.selectionStart = editorEl.selectionEnd = start + 4;
+        syncHighlight();
     }
 });
 
@@ -216,4 +302,5 @@ appendLog('Welcome to the Sage Playground', 'system');
 appendLog('Write Sage code and press Run (Ctrl+Enter)', 'system');
 appendLog('', 'info');
 loadExample('hello');
+syncHighlight();
 loadEngine();

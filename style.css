@@ -47,7 +47,7 @@ header {
     gap: 10px;
 }
 
-.logo { font-size: 1.4rem; }
+.logo { height: 28px; width: auto; }
 
 header h1 {
     font-size: 1rem;
@@ -163,24 +163,63 @@ main {
 }
 .btn-ghost:hover { color: var(--text-primary); border-color: var(--text-muted); }
 
-/* ---- Code editor ---- */
-#editor {
+/* ---- Code editor (overlay approach) ---- */
+.editor-wrap {
     flex: 1;
-    background: var(--bg-editor);
+    position: relative;
+    overflow: hidden;
+}
+
+#editor, #highlight {
     font-family: var(--font-mono);
     font-size: 14px;
     line-height: 1.6;
     padding: 16px 20px;
-    overflow-y: auto;
     white-space: pre;
-    color: var(--text-primary);
     tab-size: 4;
+    word-wrap: normal;
+    overflow-wrap: normal;
+}
+
+#highlight {
+    position: absolute;
+    inset: 0;
+    margin: 0;
+    overflow: auto;
+    pointer-events: none;
+    background: var(--bg-editor);
+    color: var(--text-primary);
+}
+#highlight code {
+    font-family: inherit;
+    font-size: inherit;
+    line-height: inherit;
+}
+
+#editor {
+    position: relative;
+    z-index: 1;
+    width: 100%;
+    height: 100%;
+    background: transparent;
+    color: transparent;
+    caret-color: var(--accent);
     border: none;
     outline: none;
     resize: none;
-    width: 100%;
-    caret-color: var(--accent);
+    overflow-y: auto;
 }
+
+/* ---- Syntax highlighting tokens ---- */
+.hl-kw { color: var(--purple); font-weight: 600; }
+.hl-type { color: var(--cyan); }
+.hl-str { color: var(--green); }
+.hl-num { color: var(--orange); }
+.hl-comment { color: var(--text-muted); font-style: italic; }
+.hl-builtin { color: var(--accent); }
+.hl-bool { color: var(--orange); font-weight: 600; }
+.hl-op { color: var(--text-secondary); }
+.hl-punct { color: var(--text-muted); }
 
 /* ---- Output panel ---- */
 .output-panel {

@@ -5,13 +5,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Sage Playground — Run Agents in Your Browser</title>
     <meta name="description" content="Write and run Sage agents directly in your browser, powered by WebAssembly.">
-    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🦉</text></svg>">
+    <link rel="icon" href="ward-owl.png" type="image/png">
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
     <header>
         <div class="header-left">
-            <span class="logo">🦉</span>
+            <img src="ward-owl.png" alt="Ward" class="logo">
             <h1>Sage Playground</h1>
             <span class="badge">Powered by WebAssembly</span>
         </div>
@@ -41,7 +41,10 @@
                     </button>
                 </div>
             </div>
-            <textarea id="editor" spellcheck="false" autocomplete="off" autocorrect="off" autocapitalize="off"></textarea>
+            <div class="editor-wrap">
+                <pre id="highlight" aria-hidden="true"><code></code></pre>
+                <textarea id="editor" spellcheck="false" autocomplete="off" autocorrect="off" autocapitalize="off"></textarea>
+            </div>
         </div>
 
         <div class="output-panel">
