@@ -9,13 +9,13 @@ const EXAMPLES = {
 
 agent Main {
     on start {
-        print("Hello from Sage!")
-        print("Running in your browser via WebAssembly")
-        yield(42)
+        print("Hello from Sage!");
+        print("Running in your browser via WebAssembly");
+        yield(42);
     }
 }
 
-run Main`,
+run Main;`,
     },
 
     counter: {
@@ -24,20 +24,20 @@ run Main`,
 
 agent Main {
     on start {
-        print("Counting to 10:")
-        let sum = 0
-        let i = 0
+        print("Counting to 10:");
+        let sum = 0;
+        let i = 0;
         while i < 10 {
-            i = i + 1
-            sum = sum + i
-            print("  " ++ int_to_str(i) ++ " (sum: " ++ int_to_str(sum) ++ ")")
+            i = i + 1;
+            sum = sum + i;
+            print("  " ++ int_to_str(i) ++ " (sum: " ++ int_to_str(sum) ++ ")");
         }
-        print("Total: " ++ int_to_str(sum))
-        yield(sum)
+        print("Total: " ++ int_to_str(sum));
+        yield(sum);
     }
 }
 
-run Main`,
+run Main;`,
     },
 
     strings: {
@@ -45,37 +45,37 @@ run Main`,
         source: `// String operations in Sage
 
 fn repeat(s: String, n: Int) -> String {
-    let result = ""
-    let i = 0
+    let result = "";
+    let i = 0;
     while i < n {
-        result = result ++ s
-        i = i + 1
+        result = result ++ s;
+        i = i + 1;
     }
-    return result
+    return result;
 }
 
 agent Main {
     on start {
-        let greeting = "Hello, Sage!"
-        print("Original: " ++ greeting)
-        print("Length: " ++ int_to_str(len(greeting)))
-        print("Upper: " ++ to_upper(greeting))
-        print("Lower: " ++ to_lower(greeting))
-        print("Contains 'Sage': " ++ int_to_str(len(split(greeting, "Sage")) - 1))
+        let greeting = "Hello, Sage!";
+        print("Original: " ++ greeting);
+        print("Length: " ++ int_to_str(len(greeting)));
+        print("Upper: " ++ to_upper(greeting));
+        print("Lower: " ++ to_lower(greeting));
+        print("Contains 'Sage': " ++ int_to_str(len(split(greeting, "Sage")) - 1));
 
-        let parts = split("one,two,three", ",")
-        print("Split: " ++ join(parts, " | "))
+        let parts = split("one,two,three", ",");
+        print("Split: " ++ join(parts, " | "));
 
-        let stars = repeat("*", 20)
-        print(stars)
-        print("  Sage Playground")
-        print(stars)
+        let stars = repeat("*", 20);
+        print(stars);
+        print("  Sage Playground");
+        print(stars);
 
-        yield(0)
+        yield(0);
     }
 }
 
-run Main`,
+run Main;`,
     },
 
     fibonacci: {
@@ -84,25 +84,25 @@ run Main`,
 
 fn fib(n: Int) -> Int {
     if n <= 1 {
-        return n
+        return n;
     }
-    return fib(n - 1) + fib(n - 2)
+    return fib(n - 1) + fib(n - 2);
 }
 
 agent Main {
     on start {
-        print("Fibonacci sequence:")
-        let i = 0
+        print("Fibonacci sequence:");
+        let i = 0;
         while i <= 15 {
-            let f = fib(i)
-            print("  fib(" ++ int_to_str(i) ++ ") = " ++ int_to_str(f))
-            i = i + 1
+            let f = fib(i);
+            print("  fib(" ++ int_to_str(i) ++ ") = " ++ int_to_str(f));
+            i = i + 1;
         }
-        yield(fib(15))
+        yield(fib(15));
     }
 }
 
-run Main`,
+run Main;`,
     },
 };
 
