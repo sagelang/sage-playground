@@ -1,3 +1,5 @@
+/* @ts-self-types="./sage_playground_engine.d.ts" */
+
 /**
  * Result of running a Sage program.
  */
